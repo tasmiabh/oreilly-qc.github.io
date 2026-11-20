@@ -7,9 +7,13 @@
 qc.reset(2);
 var a = qint.new(1, 'a');
 var b = qint.new(1, 'b');
+//TASMIA
+//initialization explicit by writing 0
 qc.write(0);
 qc.nop();
 
+//TASMIA
+//Entanglement marked with label, and the performed by h gate and cnot gate
 qc.label('entangle');
 a.had();           // Place into superposition
 b.cnot(a);         // Entangle

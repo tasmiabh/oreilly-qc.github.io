@@ -10,6 +10,11 @@ import math
 #%matplotlib inline
 
 ## Example 3-2: Entangled Qubits
+
+## TASMIA
+## Intention: entangle two qubits (bell pair), measure them,
+# and print the counts and the state.
+
 # Set up the program
 a = QuantumRegister(1, name='a')
 b = QuantumRegister(1, name='b')
@@ -17,8 +22,13 @@ a_c = ClassicalRegister(1, name='ac')
 b_c = ClassicalRegister(1, name='bc')
 qc = QuantumCircuit(a, b, a_c, b_c)
 
+##TASMIA
+#H gate for superpostion
 qc.h(a)              # put a into a superposition of 0 and 1
+#TASMIA
+#CNOT gate through cx for entanglement
 qc.cx(a, b)        # entangle a and b
+#q-c split through measurement and print
 qc.measure(a, a_c)
 qc.measure(b, b_c)
 

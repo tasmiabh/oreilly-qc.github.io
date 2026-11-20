@@ -6,11 +6,15 @@ namespace QSharp.Chapter3
     // Example 3-2: Make a Bell pair
 
     operation PrepareAndMeasureBellPair () : Unit {
+        //TASMIA
+        //initialization by use
         // allocate the qubits
         use (a, b) = (Qubit(), Qubit());
         // put qubit a in superposition
         H(a);
-        
+
+        //TASMIA
+        //creating entanglement through cnot
         // entangle qubits a and b
         CNOT(a, b);
         
