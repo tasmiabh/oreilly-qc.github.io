@@ -8,21 +8,29 @@ namespace QSharp.Chapter4
     open Microsoft.Quantum.Diagnostics;
     open Microsoft.Quantum.Measurement;
 
+    //TASMIA
+    //entanglement (bell) with superposition
     // Helper operation to prepare Bell state on two qubits
     operation PrepareBellState (q1 : Qubit, q2 : Qubit) : Unit is Adj {
         H(q1);
         CNOT(q1, q2);
     }
 
+    //TASMIA 
+    //inverse entanglement
     // Helper operation to perform measurement in Bell basis
     operation MeasureBellBasis (q1 : Qubit, q2 : Qubit) : (Result, Result) {
         // convert the qubits from Bell basis to computational basis
         Adjoint PrepareBellState(q1, q2);
         // measure both qubits and return results
+        //TASMIA
+        //qc split
         return (MResetZ(q1), MResetZ(q2));
     }
 
     operation TeleportAndVerify () : Unit {
+        //TASMIA
+        //Initialization
         // allocate the qubits: the pair that will be entangled and shared between Alice and Bob and Alice's data qubit
         use (aliceEPR, bobEPR, data) = (Qubit(), Qubit(), Qubit());
         // prepare the data qubit in some superposition state
@@ -33,9 +41,13 @@ namespace QSharp.Chapter4
         // set up teleportation: prepare the entangled pair of qubits
         PrepareBellState(aliceEPR, bobEPR);
         
+        //TASMIA
+        //qc split
         // Alice's part of the protocol
         let message = MeasureBellBasis(data, aliceEPR);
         
+        //TASMIA
+        //qc split
         // Alice sends measurement results to Bob (no direct representation in Q# code)
         
         // let's observe the state of the system at this point
@@ -45,6 +57,8 @@ namespace QSharp.Chapter4
         Message("The state of Bob's qubit after Alice's measurement");
         DumpRegister((), [bobEPR]);
         
+        //TASMIA
+        //qc split
         // Bob applies fixup to his qubit based on the information he received from Alice
         let (fix1, fix2) = message;
         if (fix2 == One) {
@@ -59,6 +73,8 @@ namespace QSharp.Chapter4
         Message("Teleportation result (the state of Bob's qubit)");
         DumpRegister((), [bobEPR]);
 
+        //TASMIA 
+        //verification
         // to verify this, we can apply adjoint of the prep operation to Bob's qubit - the result will be |0❭
         Adjoint Ry(1.0, bobEPR);
         

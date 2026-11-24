@@ -18,6 +18,8 @@ import math
 ## we're building the operations from Toffoli gates
 ## Also, increasing the register size will require increasing the scratch size as well.
 
+#TASMIA
+#setup and initialization
 # Set up the program
 reg = QuantumRegister(4, name='reg')
 scratch = QuantumRegister(1, name='scratch')
@@ -27,15 +29,21 @@ def main():
     n2f = [0,1,2]
     number_of_iterations = 5
 
+    #TASMIA superposition
     qc.h(reg)
 
+    #TASMIA amplitude amplification
     for i in range(number_of_iterations):
         ## Flip the marked value
         qc.barrier()
+        #TASMIA
+        #oracle, multiple
         for number_to_flip in n2f:
             x_bits = ~number_to_flip
             x_list = [reg[x] for x in range(len(reg)) if x_bits & (1 << x)]
             qc.x(x_list)
+            #TASMIA
+            #Phase shift
             multi_cz([x for x in reg])
             qc.x(x_list)
 

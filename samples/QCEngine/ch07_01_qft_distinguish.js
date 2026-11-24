@@ -7,6 +7,8 @@
 qc_options.color_by_phase = true;
 qc_options.book_render = true;
 
+//TASMIA
+//initalization
 var num_qubits = 4;
 qc.reset(num_qubits);
 var signal = qint.new(num_qubits, 'signal')
@@ -15,7 +17,8 @@ var which_signal = 'A';
 // prepare the signal
 qc.label('prepare');
 signal.write(0);
-signal.hadamard();
+signal.hadamard(); //TASMIA superposition
+//TASMIA phase shift
 if (which_signal == 'A') {
     signal.phase(180, 1);
 } else if (which_signal == 'B') {
@@ -29,6 +32,8 @@ if (which_signal == 'A') {
 qc.label();
 qc.nop();
 
+//TASMIA
+//qft
 qc.label('QFT');
 signal.QFT();
 qc.label();

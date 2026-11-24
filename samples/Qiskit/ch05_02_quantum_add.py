@@ -25,25 +25,32 @@ qc = QuantumCircuit(a, b, scratch)
 
 def main():
     ## initialization
+    #TASMIA
+    #Initialization
     qc.x(a[0])
-    qc.h(a[2])
+    qc.h(a[2]) #TASMIA superposition
     qc.rz(math.radians(45), a[2])
     qc.x(b[0])
-    qc.h(b[1])
+    qc.h(b[1]) #TASMIA superposition
     qc.rz(math.radians(90), b[1])
     qc.barrier()
     
     ## Increment
+    #TASMIA
+    #Function table functions are called
     add_qint(a, b)
 
 ###############################################
 ## Some utility functions
 
+#TASMIA
+#Function table
 def add_qint(qdest, rhs):
     for bit in range(len(rhs)):
         add_int(qdest, 1 << bit, [rhs[bit]])
 
-
+#TASMIA
+#Function table
 def add_int(qdest, rhs, condition_qubits=None):
     if condition_qubits is None:
         condition_qubits = []
@@ -115,6 +122,8 @@ def multi_cx(qubits, do_cz=False):
         qc.ccx(conds[0], conds[1], target)
     if do_cz:
         qc.h(target)
+    #TASMIA
+    #cleanup with uncompute
     ops.reverse()
     for op in ops:
         qc.ccx(op[0], op[1], op[2])

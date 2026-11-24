@@ -15,6 +15,8 @@ import math
 ## Example 4-1: Basic Teleportation
 
 # Set up the program
+#TASMIA
+#Setup the registers and circuit
 alice = QuantumRegister(1, name='alice')
 ep    = QuantumRegister(1, name='ep')
 bob   = QuantumRegister(1, name='bob')
@@ -24,11 +26,15 @@ bob_c   = ClassicalRegister(1, name='bobc')
 qc = QuantumCircuit(alice, ep, bob, alice_c, ep_c, bob_c)
 
 # entangle
+# TASMIA
+# Superposition and entanglement (bell pair)
 qc.h(ep)
 qc.cx(ep, bob)
 qc.barrier()
 
 # prep payload
+# TASMIA
+# Initialize the payload state
 qc.reset(alice)
 qc.h(alice)
 qc.rz(math.radians(45), alice)
@@ -38,18 +44,26 @@ qc.barrier()
 # send
 qc.cx(alice, ep)
 qc.h(alice)
+# TASMIA
+# quantum to classical
 qc.measure(alice, alice_c)
 qc.measure(ep, ep_c)
 qc.barrier()
 
 # receive
+#TASMIA
+#classical to quantum
 qc.x(bob).c_if(ep_c, 1)
 qc.z(bob).c_if(alice_c, 1)
 
 # verify
+# TASMIA
+# Verfication
 qc.h(bob)
 qc.rz(math.radians(-45), bob)
 qc.h(bob)
+# TASMIA
+# Quantum to classical for measure
 qc.measure(bob, bob_c)
 
 ## That's the program. Everything below runs and draws it.
@@ -58,6 +72,8 @@ backend = BasicAer.get_backend('statevector_simulator')
 job = execute(qc, backend)
 result = job.result()
 
+#TASMIA
+#Classical post processing
 counts = result.get_counts(qc)
 print('counts:',counts)
 

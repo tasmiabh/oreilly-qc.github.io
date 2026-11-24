@@ -6,6 +6,8 @@
 
 // This sample demonstrates basic teleportation.
 
+// TASMIA
+// set-up and initialization
 qc.reset(3);
 var alice = qint.new(1, 'alice');
 var ep    = qint.new(1, 'ep');
@@ -25,7 +27,11 @@ bob_verify();
 function entangle()
 {
     // First, create an entangled pair
+    //TASMIA
+    //initialize with write
     qc.write(0, 2|4);
+    //TASMIA
+    //Uniform superposition nested in engaglmenet, with had and cnot
     qc.label('entangle');
     ep.had();
     bob.cnot(ep);
@@ -35,6 +41,8 @@ function entangle()
 function alice_prep()
 {
     // Alice prepares her payload to teleport
+        //TASMIA
+    //initialize with write
     alice.write(0);
     qc.label('prep payload');
     alice.had();
@@ -48,8 +56,12 @@ function alice_send()
 {
     // Alice sends the payload (and destroys it in the process)
     qc.label('send');
+    //TASMIA
+    //(Inverse?) Entanglement with payload, with cnot and had
     ep.cnot(alice);
     alice.had();
+    //TASMIA 
+    //qc split to read
     a1 = alice.read();
     a2 = ep.read();
     qc.label('');
@@ -93,10 +105,14 @@ function bob_receive()
 function bob_verify()
 {
     // Verify that the teleportation worked
+    //TASMIA
+    //verification
     qc.label('verify');
     bob.had();
     bob.phase(-45);
     bob.had();
+    //TASMIA 
+    //qc split to read
     bob.read();
     qc.label('');
     qc.nop();

@@ -9,6 +9,8 @@ namespace QSharp.Chapter6
     open Microsoft.Quantum.Convert;
     open Microsoft.Quantum.Diagnostics;
 
+    //TASMIA
+    //oracle
     // Operation that flips the sign of multiple marked values
     operation FlipMultipleStates (markedValues : Int[], register : Qubit[]) : Unit is Adj {
         ApplyToEachA(Flip(_, register), markedValues);
@@ -17,11 +19,15 @@ namespace QSharp.Chapter6
     operation MultipleTerms () : Unit {
         let markedStates = [0, 1, 2];
         let numberOfIterations = 4;
+        //TASMIA
+        //initalization
         // Allocate the qubit register
         use register = Qubit[4];
         // Prep
-        ApplyToEach(H, register);
+        ApplyToEach(H, register); //TASMIA superposition
         
+        //TASMIA
+        //amplitude amplification
         for i in 1 .. numberOfIterations {
             // Flip
             FlipMultipleStates(markedStates, register);
@@ -30,6 +36,7 @@ namespace QSharp.Chapter6
             DumpMachine();
         }
         
+        //TASMIA cleanup
         // Make sure the qubits are back to the |0❭ state
         ResetAll(register);
     }

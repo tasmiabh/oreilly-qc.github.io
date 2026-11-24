@@ -11,11 +11,21 @@ import math
 
 ## Example 3-3: Phase Kickback
 # Set up the program
+#TASMIA
+#allocation setup of the registers
 reg1 = QuantumRegister(2, name='reg1')
 reg2 = QuantumRegister(1, name='reg2')
 qc = QuantumCircuit(reg1, reg2)
 
+#TASMIA
+#question: no initialization?? Should the target be set here? Set to 1 in the other sdks
+
+#TASMIA
+#superposition of the control register
 qc.h(reg1)         # put a into reg1 superposition of 0,1,2,3
+
+#TASMIA
+#the controlled phase gates - phase shift
 qc.cu1(math.pi/4, reg1[0], reg2)
 qc.cu1(math.pi/2, reg1[1], reg2)
 

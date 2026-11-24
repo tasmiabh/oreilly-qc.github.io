@@ -11,22 +11,26 @@ namespace QSharp.Chapter5
     open Microsoft.Quantum.Arithmetic;
 
     operation QuantumAddition () : Unit {
+        //TASMIA
+        //Initialization
         use (a, b) = (Qubit[4], Qubit[2]);
         // Initialize the inputs
         X(a[0]);
-        H(a[2]);
+        H(a[2]); //TASMIA superposition
         T(a[2]);
         Message("Register a");
         DumpRegister((), a);
         // At this point non-zero amplitudes of register a are at the basis states |1❭ and |5❭
 
         X(b[0]);
-        H(b[1]);
+        H(b[1]); //TASMIA superposition
         T(b[1]);
         Message("Register b");
         DumpRegister((), b);
         // At this point non-zero amplitudes of register b are at the basis states |1❭ and |3❭
 
+        //TASMIA
+        //Function table
         // The library operation AddI will add the first parameter to the second one
         AddI(LittleEndian(b), LittleEndian(a));
         
@@ -43,6 +47,8 @@ namespace QSharp.Chapter5
         // The amplitude of this state is a product of the amplitudes of the basis states |1❭ and |1❭ that were added, 1/sqrt(2) * 1/sqrt(2).
         // The rest of the states can be traced in a similar way.
         
+        //TASMIA
+        //cleanup
         // Make sure the qubits are back to the |0❭ state
         ResetAll(a + b);
     }

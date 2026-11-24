@@ -8,19 +8,27 @@ var n2f = [0,1,2];
 var number_of_iterations = 5;
 
 var num_qubits = 4;
+//TASMIA
+//Initalization
 qc.reset(num_qubits);
 var reg = qint.new(num_qubits, 'reg')
 reg.write(0);
-reg.hadamard();
+reg.hadamard(); //TASMIA superposition
 
+//TASMIA
+//Amplitude amplification
 for (var i = 0; i < number_of_iterations; ++i)
 {
     // Flip the marked values
+    //TASMIA
+    //Oracle, multiple through loop
     for (var j = 0; j < n2f.length; ++j)
     {
         number_to_flip = n2f[j];
         reg.not(~number_to_flip);
+        //TASMIA phase shift
         reg.cphase(180);
+        //cleanup implicit twice
         reg.not(~number_to_flip);
     }
 

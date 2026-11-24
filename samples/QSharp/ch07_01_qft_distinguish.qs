@@ -8,8 +8,10 @@ namespace QSharp.Chapter7
     open Microsoft.Quantum.Arithmetic;
     open Microsoft.Quantum.Diagnostics;
 
+    //TASMIA Prepares the state, initalize it
     operation PrepareState (register : Qubit[], state : String) : Unit {
-        ApplyToEach(H, register);
+        ApplyToEach(H, register); //TASMIA superposition
+        //TASMIA phase shift
         if (state == "A") {
             Z(register[0]);
         } elif (state == "B") {
@@ -28,11 +30,13 @@ namespace QSharp.Chapter7
         // Apply QFT
         // (Q# library implementation of QFT is inverse compared to the one used in the book,
         // so this code uses Adjoint QFTLE to match the desired effect).
+        // TASMIA qft
         Adjoint QFTLE(LittleEndian(register));
     
         // Uncomment this line to see the amplitudes after QFT
         // DumpMachine();
     
+        //TASMIA QC split
         // Measure the register and interpret the results
         let frequency = MeasureInteger(LittleEndian(register));
         return frequency == 8 ? "A" | (frequency == 4 ? "B" | "C");
@@ -51,6 +55,8 @@ namespace QSharp.Chapter7
             let classifiedState = ClassifyState(register);
             Message($"State {inputState} recognized as {classifiedState}");
             
+            //TASMIA
+            //cleanup
             // Make sure to reset qubits to the |0❭ state before reusing/releasing them
             ResetAll(register);
         }

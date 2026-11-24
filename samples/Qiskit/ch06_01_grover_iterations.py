@@ -18,6 +18,8 @@ import math
 ## we're building the operations from Toffoli gates
 
 # Set up the program
+#TASMIA
+#Setup and initalization
 reg = QuantumRegister(4, name='reg')
 scratch = QuantumRegister(1, name='scratch')
 qc = QuantumCircuit(reg, scratch)
@@ -26,14 +28,22 @@ def main():
     number_to_flip = 3
     number_of_iterations = 4
 
+    #TASMIA
+    #Superposition
     qc.h(reg)
 
+    #TASMIA
+    #Amplitude amplification
     for i in range(number_of_iterations):
         ## Flip the marked value
         qc.barrier()
+        # TASMIA
+        # oracle
         x_bits = ~number_to_flip
         x_list = [reg[x] for x in range(len(reg)) if x_bits & (1 << x)]
         qc.x(x_list)
+        #TASMIA
+        #phase shift
         multi_cz([x for x in reg])
         qc.x(x_list)
 
@@ -48,6 +58,8 @@ def Grover(qreg, condition_qubits=None):
         condition_qubits = []
     qc.h(qreg)
     qc.x(qreg)
+    #TASMIA
+    #phase shift
     multi_cz([x for x in qreg] + condition_qubits)
     qc.x(qreg)
     qc.h(qreg)

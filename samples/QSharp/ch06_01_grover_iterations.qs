@@ -29,11 +29,14 @@ namespace QSharp.Chapter6
 
     operation OneIteration () : Unit {
         let markedState = 3;
+        //TASMIA initialization
         // Allocate the qubit register
         use register = Qubit[4];
         // Prep
-        ApplyToEach(H, register);
+        ApplyToEach(H, register); //TASMIA superposition
         
+        //TASMIA
+        // Amplitude amplification
         // Flip
         Flip(markedState, register);
         DumpMachine();
@@ -46,6 +49,7 @@ namespace QSharp.Chapter6
         // (the first column in square brackets, also indicated by a row of asterisks before it)
         // is larger than the others
         
+        // TASMIA cleanup
         // Make sure the qubits are back to the |0❭ state
         ResetAll(register);
     }
